@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/pages/randomQuoteMachine.css"],"names":[],"mappings":"AAAA,KACE,YAAa,CACb,qBAAsB,CACtB,kBACF","file":"randomQuoteMachine.195a98f0.chunk.css","sourcesContent":[".rqm {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}"]}

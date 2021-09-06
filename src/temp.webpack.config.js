@@ -577,36 +577,7 @@ module.exports = function (webpackEnv) {
           {},
           {
             inject: true,
-            chunks: ['index'],
             template: paths.appHtml,
-            filename: 'index.html'
-          },
-          isEnvProduction
-            ? {
-                minify: {
-                  removeComments: true,
-                  collapseWhitespace: true,
-                  removeRedundantAttributes: true,
-                  useShortDoctype: true,
-                  removeEmptyAttributes: true,
-                  removeStyleLinkTypeAttributes: true,
-                  keepClosingSlash: true,
-                  minifyJS: true,
-                  minifyCSS: true,
-                  minifyURLs: true,
-                },
-              }
-            : undefined
-        )
-      ),
-      new HtmlWebpackPlugin(
-        Object.assign(
-          {},
-          {
-            inject: true,
-            chunks: ['randomQuoteMachine'],
-            template: paths.appPublic + "/pages/randomQuoteMachine/index.html",
-            filename: 'pages/randomQuoteMachine/index.html'
           },
           isEnvProduction
             ? {
@@ -695,14 +666,9 @@ module.exports = function (webpackEnv) {
             manifest[file.name] = file.path;
             return manifest;
           }, seed);
-          // const entrypointFiles = entrypoints.main.filter(
-          //   fileName => !fileName.endsWith('.map')
-          // );
-          let entrypointFiles = [];
-          for (let [entryFile, fileName] of Object.entries(entrypoints)) {
-            let notMapFiles = fileName.filter(fileName => !fileName.endsWith('.map'));
-            entrypointFiles = entrypointFiles.concat(notMapFiles);
-          };
+          const entrypointFiles = entrypoints.main.filter(
+            fileName => !fileName.endsWith('.map')
+          );
 
           return {
             files: manifestFiles,

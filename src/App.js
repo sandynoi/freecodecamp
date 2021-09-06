@@ -6,6 +6,13 @@ import './App.css';
 function App() {
   return (
     <div className="App">
+      <a
+        href="freecodecamp/pages/randomQuoteMachine/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Random Quote Machine
+      </a>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <Counter />

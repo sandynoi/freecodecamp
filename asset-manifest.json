@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/freecodecamp/static/css/main.730a7a46.chunk.css",
+    "main.js": "/freecodecamp/static/js/main.2a5a1b24.chunk.js",
+    "main.js.map": "/freecodecamp/static/js/main.2a5a1b24.chunk.js.map",
+    "runtime-main.js": "/freecodecamp/static/js/runtime-main.8bb3d08d.js",
+    "runtime-main.js.map": "/freecodecamp/static/js/runtime-main.8bb3d08d.js.map",
+    "static/js/2.e999fb33.chunk.js": "/freecodecamp/static/js/2.e999fb33.chunk.js",
+    "static/js/2.e999fb33.chunk.js.map": "/freecodecamp/static/js/2.e999fb33.chunk.js.map",
+    "index.html": "/freecodecamp/index.html",
+    "static/css/main.730a7a46.chunk.css.map": "/freecodecamp/static/css/main.730a7a46.chunk.css.map",
+    "static/js/2.e999fb33.chunk.js.LICENSE.txt": "/freecodecamp/static/js/2.e999fb33.chunk.js.LICENSE.txt",
+    "static/media/logo.b2e5a01e.svg": "/freecodecamp/static/media/logo.b2e5a01e.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8bb3d08d.js",
+    "static/js/2.e999fb33.chunk.js",
+    "static/css/main.730a7a46.chunk.css",
+    "static/js/main.2a5a1b24.chunk.js"
+  ]
+}

@@ -1,0 +1,85 @@
+FROM ubuntu:latest
+
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Bangkok
+
+RUN apt-get update
+RUN apt-get install tzdata -y
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN apt-get install git vim openssh-server sudo -y
+
+RUN mkdir /var/run/sshd
+
+RUN groupadd -g 1000 ubuntu
+RUN useradd -rm -d /home/ubuntu -s /bin/bash -G sudo -u 1000 -g 1000 ubuntu 
+RUN echo 'ubuntu:ubuntu' | chpasswd
+RUN chown -R 1000 /home/ubuntu
+
+RUN sed -ri 's/^#?PasswordAuthentication\s+.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+WORKDIR /home/ubuntu/
+ENV HOME /home/ubuntu
+
+VOLUME ["/home"]
+
+EXPOSE 22
+
+CMD ["/usr/sbin/sshd","-D"]
+
+---------------------------------------------------------------------
+
+CHANGE username
+===============
+after start container/ login as normal
+
+usermod -l pure ubuntu
+
+re-login with pure
+
+---------------------------------------------------------------------
+http://hokstad.com/docker/patterns
+---------------------------------------------------------------------
+
+BUILD
+=====
+#!/usr/bin/env bash
+
+docker build -t sshd .
+
+
+---------------------------------------------------------------------
+
+
+RUN
+===
+#!/usr/bin/env bash
+
+echo "Create folder /home/osboxes/ubuntu <uid:1000> before calling ./run"
+echo "so, ubuntu user in container will have a correct permission <uid:gid 1000:1000>"
+
+docker run -d \
+  --name=sshd \
+  --hostname=SERVER \
+  -e TZ=Asia/Bangkok \
+  -p 2222:22 \
+  -p 3000:3000 \
+  -p 5000:5000 \
+  -v /home/osboxes/ubuntu:/home/ubuntu \
+  --restart unless-stopped \
+  sshd
+
+
+---------------------------------------------------------------------
+
+
+LOG
+===
+#!/usr/bin/env bash
+
+docker logs --tail 50 sshd
+
+

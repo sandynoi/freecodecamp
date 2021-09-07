@@ -1,0 +1,71 @@
+FROM ubuntu:latest
+
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Bangkok
+
+RUN apt-get update
+RUN apt-get install tzdata -y
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN apt-get install curl git vim sudo -y
+
+RUN groupadd -g 1000 pure
+RUN useradd -rm -d /home/pure -s /bin/bash -G sudo -u 1000 -g 1000 pure
+RUN echo 'pure:pure' | chpasswd
+
+WORKDIR /home/pure/
+ENV HOME /home/pure
+
+RUN curl -fsSL https://code-server.dev/install.sh | sh
+RUN mkdir -p /home/pure/.config/code-server
+RUN printf 'bind-addr: 0.0.0.0:8080\nauth: none\n' > /home/pure/.config/code-server/config.yaml
+
+RUN chown -R 1000:1000 /home/pure
+
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+USER pure
+VOLUME ["/home"]
+
+EXPOSE 8080
+
+CMD ["/usr/bin/code-server"]
+
+---------------------------------------------------------------------
+
+BUILD
+=====
+#!/usr/bin/env bash
+
+docker build -t codeserver .
+
+
+
+docker tag codeserver pure69730002/codeserver
+
+---------------------------------------------------------------------
+
+RUN
+===
+#!/usr/bin/env bash
+
+docker run -d --name=code \
+	--hostname=SERVER \
+	-p 8080:8080 \
+	-p 3000:3000 \
+	-p 5000:5000 \
+	-v /home/osboxes/code:/home/pure/code \
+	--restart unless-stopped \
+	codeserver
+
+
+---------------------------------------------------------------------
+
+
+LOG
+===
+#!/usr/bin/env bash
+
+docker logs --tail 50 code
+
+
